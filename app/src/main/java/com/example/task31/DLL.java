@@ -2,6 +2,7 @@ package com.example.task31;
 
 public class DLL {
     Node head;
+    Node tail;
     static int counter = 0;
     String displayList = "";
 
@@ -120,5 +121,64 @@ public class DLL {
         }
         return flag;
     }
-    
+
+    public boolean removeAt(int index) {
+        tail = null;
+        boolean flag = false;
+        if (head == null || index < 0) {
+            return flag;
+        }
+        Node current = head;
+        int temp = index;
+        for (int i = 1; current != null && i < index; i++) {
+            current = current.next;
+        }
+        if (current == null) {
+            flag = false;
+            return flag;
+        } else {
+            deleteNode(current);
+            flag = true;
+            return flag;
+        }
+
+    }
+
+    public Node deleteNode(Node deleted) {
+        if (head == null || deleted == null)
+            return null;
+
+        if (head == deleted)
+            head = deleted.next;
+
+        if (deleted.next != null)
+            deleted.next.previous = deleted.previous;
+
+        if (deleted.previous != null)
+            deleted.previous.next = deleted.next;
+
+        deleted = null;
+
+        return head;
+    }
+
+    public boolean isPalindrome() {
+        Node left = head;
+        if (left == null) {
+            return true;
+        }
+        Node right = left;
+        while (right.next != null) {
+            right = right.next;
+        }
+        while (left != right) {
+            if (left.data != right.data)
+                return false;
+            left = left.next;
+            right = right.previous;
+        }
+        return true;
+
+    }
+
 }
